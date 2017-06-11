@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DJBird</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<form method="post" action=".">
+    {% csrf_token %}
+<nav  class="navbar navbar-default">
+    <a href="/" class="navbar-brand">DJBird</a>
+</nav>
+    <div class="container" align="center">
+        {% if success %}
+<div class="alert alert-success">
+    Registeration is done successfully, please try to <a href="../login/">Login </a>
+</div>
+{% endif %}
+{% if form.errors %}
+    <div class="alert alert-danger" align="left">
+    Please fix the following errors to continue:
+    <ul>
+        {% for error,message in form.errors.items %}
+                <li><b>{{error }}</b>: {{ message }}</li>
+        {% endfor %}
+    </ul>
+    </div>
+{% endif %}
+        <h1>Create new account</h1>
+<div class="well well-sm" align="left">Personal Information</div>
+
+    <div class="row">
+        <div class="col-md-2 col-sm-3 col-xs-4 col-lg-2">
+            <label>{{ form.firstname.label }}</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-4">
+            {{ form.firstname }}
+        </div>
+        <div class="col-md-4 col-sm-3 col-xs-2 col-lg-3">
+            {{ form.firstname.errors }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-sm-3 col-xs-4 col-lg-2">
+            <label>{{ form.lastname.label }}</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-4">
+            {{ form.lastname }}
+        </div>
+        <div class="col-md-4 col-sm-3 col-xs-2 col-lg-3">
+            {{ form.lastname.errors }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-sm-3 col-xs-4 col-lg-2">
+            <label>{{ form.email.label }}</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-4">
+            {{ form.email }}
+        </div>
+        <div class="col-md-4 col-sm-3 col-xs-2 col-lg-3">
+            {{ form.email.errors }}
+        </div>
+    </div>
+        <div class="well well-sm" align="left">Login Information</div>
+        <div class="row">
+        <div class="col-md-2 col-sm-3 col-xs-4 col-lg-2">
+            <label>{{ form.username.label }}</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-4">
+            {{ form.username }}
+        </div>
+        <div class="col-md-4 col-sm-3 col-xs-2 col-lg-3">
+            {{ form.username.errors }}
+        </div>
+    </div>
+        <div class="row">
+        <div class="col-md-2 col-sm-3 col-xs-4 col-lg-2">
+            <label>{{ form.password1.label }}</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-4">
+            {{ form.password1 }}
+        </div>
+        <div class="col-md-4 col-sm-3 col-xs-2 col-lg-3">
+            {{ form.password1.errors }}
+        </div>
+    </div>
+        <div class="row">
+        <div class="col-md-2 col-sm-3 col-xs-4 col-lg-2">
+            <label>{{ form.password2.label }}</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-4">
+            {{ form.password2 }}
+        </div>
+        <div class="col-md-4 col-sm-3 col-xs-2 col-lg-3">
+            {{ form.password2.errors }}
+        </div>
+    </div>
+       <div class="row">
+           <div class="col-md-12 col-lg-9 col-sm-12 col-xs-12">
+                <button value="register" type="submit" class="btn btn-primary">Register</button>
+
+           </div>
+       </div>
+        </div>
+
+</form>
+</body>
+</html>

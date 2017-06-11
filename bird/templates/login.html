@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DJBird</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .form-control
+        {
+            display: inline;
+            width: 35%;
+        }
+    </style>
+</head>
+<body>
+
+<form method="post" action=".">
+    {% csrf_token %}
+<nav  class="navbar navbar-default">
+    <a href="/" class="navbar-brand">DJBird</a>
+</nav>
+    <div class="container" align="center">
+        {%  if Error %}
+            <div class="alert alert-warning">
+            {{ Error }}
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading" align="left"><strong>Log In</strong></div>
+            <div class="panel-body>">
+                <br/>
+            <div class="row">
+                <label>{{ form.username.label }}</label>
+                {{ form.username }}
+
+            </div>
+                <br/>
+
+            <div class="row">
+                <label>{{ form.password.label }}</label>
+                {{ form.password }}
+            </div>
+                <br/>
+                <div class="row" align="center">
+                <button class="btn btn-primary" type="submit">Log In...</button>
+
+            </div>
+                <br/>
+        </div>
+    </div>
+        </div>
+    </form>
+</body>
+</html>

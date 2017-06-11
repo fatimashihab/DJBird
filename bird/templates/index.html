@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DJBird</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body>
+
+<form name="form" method="post" action="{% url "bird.views.search_users" %}">
+    {% csrf_token %}
+
+<nav  class="navbar navbar-default">
+    <a href="/" class="navbar-brand">DJBird</a>
+
+    <input type="text" style="margin-top:1%;" placeholder = "Search  DJBird ..." name="Search" />
+
+    <button type="submit" style="border:0px; background-color:#4285F4; margin-top:1%;
+         height: 24px; width:2%;">
+    <span class="glyphicon glyphicon-search"></span> </button>
+</nav></form>
+
+
+    <div class="container" align="center">
+
+
+        <div class="row">
+
+        <div class="col-md-4">
+         <h2> Welcome, {{ request.user.username }}</h2>
+            </div>
+            </div>
+    <br>
+
+
+        <div class="row">
+            <div class="col-md-8">
+
+
+                <form name="form" method="post" action="{% url "bird.views.new_update" %}">
+                   {% csrf_token %}
+                   {{ updateform }}
+               <input type="submit" value="Submit" />
+            </form>
+            </div>
+
+
+            <div class="col-md-4">
+                <div style="border: solid #ccc 1px; width: 128px; height:128px">
+                    {% if img %}
+                            <a href="upload/"><img src="{% url 'bird.views.user_img' request.user.username %}" style="width: 128px;height: 128px"/></a>
+                        {% else %}
+
+                    <div style="position: relative; top:50px;">
+                            <a href="upload/">Upload an image</a>
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+
+
+            </div>
+</div>
+<br>
+
+
+    <div class="col-md-7 col-md-offset-1 ">
+    <div style="margin-left: 10%;">
+        {% if Updates %}
+            {% for post in Updates%}
+                <div class="row">
+                <div class="well" align="left">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-2">
+                        <div style="border: solid #ccc 1px;width: 50px;height: 50px ">
+                        {% if img %}
+                            <img src="{% url 'bird.views.user_img' post.user.user.username %}" style="width: 50px;height: 50px"/>
+                        {% else %}
+                            <div style="position: relative; top:50px;">No Image</div>
+                        {% endif %}
+
+                        </div>
+                        </div>
+                <div class="col-sm-8 col-md-8">
+
+            <h4><b> {{ post.user.user.username }} {{  post.user.Fav.user}}}</b> </h4>
+                <h5>{{ post.created_on }}  @{{ post.user.user.first_name }} {{ post.user.user.last_name }}  </h5>
+                    <p>{{ post.text }}</p>
+            </div>
+                        </div>
+
+                <div class="row">
+                        {% if post.user.user.username == request.user.username %}
+                        <div class="col-sm-4 col-md-4">
+                        <button type="submit" style="border:0px; background-color:#4285F4; margin-top:1%;
+                             height: 24px; width:30%;" value="delete" name="delete">
+                        <span class="glyphicon glyphicon-remove"></span> </button>
+                        </div>
+                        {% endif %}
+
+                        <div class="col-sm-4 col-md-4">
+
+                        {% if request.user.username in post.user.likes_set %}
+                            <form name="form" id="like_form" method="post" action="{% url "bird.views.like_update" %}">
+                            {% csrf_token %}
+                                <button id="like_status" type="submit" style="border:0px; background-color:#4285F4; margin-top:1%;height: 24px; width:30%;" value={{post.id}} name="like">
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                <span class="like-count">{{ post.likes }}</span>)
+                                </button>
+                            </form>
+
+
+                        {% else %}
+                            <form name="form" id="like_form" method="post" action="{% url "bird.views.like_update" %}">
+                            {% csrf_token %}
+                                <button id="like_status" type="submit" style="border:0px; background-color:white; margin-top:1%;height: 24px; width:30%;" value={{post.id}} name="like">
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                <span class="like-count">{{ post.likes }}</span>)
+                                </button>
+                            </form>
+                        {% endif %}
+
+
+                        </div>
+
+
+                        <div class="col-sm-4 col-md-4">
+                        <button type="submit" style="border:0px; background-color:#4285F4; margin-top:1%;
+                             height: 24px; width:30%;" value="reply" name="reply">
+                        <span class="glyphicon glyphicon-share-alt"></span> </button>
+                        </div>
+                </div>
+
+
+
+
+                </div></div>
+        {% endfor %}
+    {% else %}
+        <h3>There are no posts.</h3>
+    {% endif %}
+
+                </div>
+
+
+</div></div>
+
+<script>
+
+    function like_update() {
+             $.ajax({ url : "bird.views.like_update",
+             type : "POST",
+             data : { liked : $('#like_status').val(), csrfmiddlewaretoken: '{{ csrf_token }}' },
+
+             success : function(values) {
+
+                 if ( values==true){
+                     $('#like_status').css('background-color','#4285F4')}
+
+
+                 if ( values==false){
+                     $('#like_status').css('background-color','white')}
+            console.log(values); // log the returned json to the console
+            console.log("success"); // another sanity check
+             }});};
+
+
+$('#like_form').on('submit',function (event) {
+             event.preventDefault();
+             console.log($('#like_status').val())
+             like_update();
+         });
+
+</script>
+
+</body>
+
+</html>

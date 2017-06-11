@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DJBird</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav  class="navbar navbar-default">
+    <a href="/" class="navbar-brand">DJBird</a>
+</nav>
+    <div class="container" align="center">
+		<form method="post" action="." enctype="multipart/form-data">
+
+        <div class="row">
+            {% csrf_token %}
+
+            <div class="col-md-2">Upload an image:</div>
+            <div class="col-md-6"><input name="pic" type="file" class="form-control" accept="image/*"/></div>
+        </div>
+        <div class="row">
+            <button class="btn btn-primary" type="submit">Upload</button>
+        </div>
+    </div>
+    </form>
+</body>
