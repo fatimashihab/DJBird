@@ -1,3 +1,0 @@
-# DJBird
-# DJBird
-# DJBird
